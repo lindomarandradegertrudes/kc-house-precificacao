@@ -71,12 +71,7 @@ requirements.txt
 
 ## Modularização (src/)
 
-Como diferencial de organização, as funções desenvolvidas ao longo do 
-notebook foram reorganizadas em módulos Python dentro da pasta `src/`, 
-que o notebook importa e reutiliza. Isso separa a lógica de cada etapa 
-do pipeline (carga de dados, limpeza, visualização, modelagem) em 
-arquivos próprios, facilitando manutenção e reuso do código. A 
-demonstração de uso desses módulos está na seção final do notebook.
+Como diferencial de organização, as funções desenvolvidas ao longo do notebook foram reorganizadas em módulos Python dentro da pasta `src/`, que o notebook importa e reutiliza. Isso separa a lógica de cada etapa do pipeline (carga de dados, limpeza, visualização, modelagem) em arquivos próprios, facilitando manutenção e reuso do código. A demonstração de uso desses módulos está na seção final do notebook.
 
 ## Melhorias Futuras (v2)
 
