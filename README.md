@@ -57,8 +57,26 @@ notebooks/
 └── projeto_precificacao.ipynb   # notebook principal com todo o pipeline
 outputs/
 └── figures/          # gráficos gerados durante a análise
+src/                    # modularização do pipeline (diferencial)
+├── __init__.py
+├── config.py            # caminhos e parâmetros do projeto
+├── dataset.py            # carga/salvamento dos dados
+├── features.py            # limpeza + colunas derivadas
+├── plots.py                # funções de visualização
+└── modeling/
+    ├── __init__.py
+    └── train.py            # preparação, treino, diagnóstico e versionamento
 requirements.txt
 ```
+
+## Modularização (src/)
+
+Como diferencial de organização, as funções desenvolvidas ao longo do 
+notebook foram reorganizadas em módulos Python dentro da pasta `src/`, 
+que o notebook importa e reutiliza. Isso separa a lógica de cada etapa 
+do pipeline (carga de dados, limpeza, visualização, modelagem) em 
+arquivos próprios, facilitando manutenção e reuso do código. A 
+demonstração de uso desses módulos está na seção final do notebook.
 
 ## Melhorias Futuras (v2)
 
