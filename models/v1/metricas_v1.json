@@ -3,7 +3,7 @@
     "MSE": 46005714494.71759,
     "RMSE": 214489.42746605855,
     "R2": 0.6934725660761947,
-    "data_treinamento": "2026-07-08 21:36:14.487128",
+    "data_treinamento": "2026-07-08 22:38:21.572740",
     "variaveis_preditoras": [
         "bedrooms",
         "bathrooms",
