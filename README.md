@@ -66,6 +66,9 @@ src/                    # modularização do pipeline (diferencial)
 └── modeling/
     ├── __init__.py
     └── train.py            # preparação, treino, diagnóstico e versionamento
+ .gitignore
+ LICENSE
+ README.md
 requirements.txt
 ```
 

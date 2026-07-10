@@ -40,10 +40,34 @@ def preparar_dados(df: pd.DataFrame):
 
 
 def treinar_modelo(X_train_scaled, y_train) -> LinearRegression:
-    """Treina um modelo de Regressão Linear."""
+    """Treina um modelo de Regressão Linear (usado para VALIDAÇÃO,
+    com split treino/teste)."""
     modelo = LinearRegression()
     modelo.fit(X_train_scaled, y_train)
     return modelo
+
+
+def treinar_modelo_final(df: pd.DataFrame):
+    """
+    Treina o modelo FINAL (o que será salvo em models/v1/) usando 100%
+    dos dados disponíveis, sem separar treino/teste.
+
+    Diferente de treinar_modelo(), que serve apenas para VALIDAR o
+    desempenho do modelo (métricas honestas sobre dados não vistos),
+    este modelo final aproveita toda a informação disponível, já que
+    não será mais avaliado após o treino - as métricas de referência
+    continuam sendo as obtidas na validação com treino/teste.
+    """
+    X = df[FEATURES]
+    y = df[TARGET]
+
+    scaler_final = StandardScaler()
+    X_scaled_full = scaler_final.fit_transform(X)
+
+    modelo_final = LinearRegression()
+    modelo_final.fit(X_scaled_full, y)
+
+    return modelo_final, scaler_final
 
 
 def diagnosticar_overfitting(modelo, X_train_scaled, y_train, X_test_scaled, y_test) -> dict:
@@ -76,16 +100,18 @@ def avaliar_modelo(modelo, X_test_scaled, y_test) -> dict:
     return {"MAE": mae, "MSE": mse, "RMSE": rmse, "R2": r2, "pred_test": pred_test}
 
 
-def salvar_modelo(modelo, metricas: dict, versao: str = "v1") -> None:
+def salvar_modelo(modelo_final, metricas: dict, versao: str = "v1") -> None:
     """
-    Versiona o modelo treinado e suas métricas na pasta models/<versao>/,
+    Versiona o modelo FINAL (treinado na base completa, via
+    treinar_modelo_final) e as métricas de VALIDAÇÃO (obtidas via
+    avaliar_modelo, com split treino/teste) na pasta models/<versao>/,
     seguindo o padrão obrigatório da Fase 6.
     """
     pasta_versao = MODELS_DIR / versao
     pasta_versao.mkdir(parents=True, exist_ok=True)
 
     with open(pasta_versao / f"modelo_regressao_{versao}.pkl", "wb") as f:
-        pickle.dump(modelo, f)
+        pickle.dump(modelo_final, f)
 
     metricas_salvas = {
         "MAE": metricas["MAE"],
@@ -94,9 +120,13 @@ def salvar_modelo(modelo, metricas: dict, versao: str = "v1") -> None:
         "R2": metricas["R2"],
         "data_treinamento": str(datetime.datetime.now()),
         "variaveis_preditoras": FEATURES,
+        "observacao": (
+            "Métricas obtidas com modelo validado via split treino/teste. "
+            "O modelo .pkl salvo foi retreinado com 100% dos dados disponíveis."
+        ),
     }
 
     with open(pasta_versao / f"metricas_{versao}.json", "w") as f:
         json.dump(metricas_salvas, f, indent=4)
 
-    print(f"Modelo e métricas salvos com sucesso em models/{versao}/")
+    print(f"Modelo final (base completa) e métricas de validação salvos com sucesso em models/{versao}/")

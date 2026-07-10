@@ -3,7 +3,7 @@
     "MSE": 46005714494.71759,
     "RMSE": 214489.42746605855,
     "R2": 0.6934725660761947,
-    "data_treinamento": "2026-07-08 22:38:21.572740",
+    "data_treinamento": "2026-07-09 21:45:02.477065",
     "variaveis_preditoras": [
         "bedrooms",
         "bathrooms",
@@ -18,5 +18,6 @@
         "foi_reformado",
         "lat",
         "long"
-    ]
+    ],
+    "observacao": "M\u00e9tricas obtidas com modelo validado via split treino/teste. O modelo .pkl salvo foi retreinado com 100% dos dados dispon\u00edveis."
 }
